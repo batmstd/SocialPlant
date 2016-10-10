@@ -55,6 +55,8 @@ public class add extends AppCompatActivity {
                 + about_plant +"');";
         mSqLiteDatabase.execSQL(insert_new_plant);
         System.out.println("insert to DB: "+insert_new_plant);
+        Intent intentBack = new Intent(getApplicationContext(), profile.class);
+        startActivity(intentBack);
         Toast toast = Toast.makeText(getApplicationContext(),
                 "Добавлено",
                 Toast.LENGTH_SHORT);
