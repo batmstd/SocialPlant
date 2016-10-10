@@ -29,7 +29,7 @@ public class edit extends AppCompatActivity {
         setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         positionEdit = getIntent().getIntExtra("position", 0);
-        System.out.println("Position: " + positionEdit);
+        System.out.println("Position:  " + positionEdit);
         //делаем соотношение с айди
         id = positionEdit + 1;
         editName = (EditText)findViewById(R.id.editName);
