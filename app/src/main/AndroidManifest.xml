@@ -32,18 +32,24 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service
-            android:name="MyService"
-            android:label=".MyService"
+            android:name=".MyService"
             android:enabled="true"
-            android:process=":myservice"
-            android:exported="true"></service>
+            android:exported="true"
+            android:label=".MyService"
+            android:process=":myservice" />
+
         <receiver
             android:name=".Receiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="someAction"/>
+                <action android:name="someAction" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".edit"
+            android:label="@string/title_activity_edit"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

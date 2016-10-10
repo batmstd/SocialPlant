@@ -60,6 +60,7 @@ public class add extends AppCompatActivity {
                 Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
+        mSqLiteDatabase.close();
     }
 
     public void photo (View v){

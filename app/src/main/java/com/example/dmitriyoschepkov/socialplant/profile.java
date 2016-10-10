@@ -114,10 +114,7 @@ public class profile extends AppCompatActivity {
         typeCursor2.close();
         typeCursor3.close();
         typeCursor4.close();
-        /*//update activity
-        Intent intent_update = getIntent();
-        finish();
-        startActivity(intent_update);*/
+
     }
     public void profile_add_type(View view){
         Intent intent = new Intent(getApplicationContext(), add_type.class);
@@ -142,6 +139,10 @@ public class profile extends AppCompatActivity {
             Intent intent_update = getIntent();
             finish();
             startActivity(intent_update);
+        }else  if (id == R.id.editProfile){
+            Intent intentEdit = new Intent(getApplicationContext(), edit.class);
+            intentEdit.putExtra("position", position);
+            startActivity(intentEdit);
         }
 
         return super.onOptionsItemSelected(item);

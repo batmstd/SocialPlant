@@ -8,6 +8,7 @@
     <string name="update">update</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>
+    <string name="editProfile">Edit Profile</string>
     <string name="notification">notification</string>
     <string name="title_item_list">Items</string>
     <string name="title_item_detail">Item Detail</string>
@@ -104,4 +105,5 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="title_activity_add_type">add_type</string>
+    <string name="title_activity_edit">edit</string>
 </resources>

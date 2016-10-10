@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity
                 intent.putExtra("position", position);
                 startActivity(intent);
 
+
             }
         });
         sqlHelper = new DBHelper(getApplicationContext());
