@@ -15,7 +15,7 @@ public class DBHelper extends SQLiteOpenHelper implements BaseColumns {
     //name BD
     private static final String DATABASE_NAME = "social.db";
     //version
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
 
 
     //name  table
@@ -35,6 +35,7 @@ public class DBHelper extends SQLiteOpenHelper implements BaseColumns {
     public static final String ID_plant = "id_plant";
     public static final String TYPE = "type";
     public static final String DATE_TYPE = "date_type";
+    public static final String ACTUAL = "actual";
     //table TYPE
     public static final String PROP_VALUE = "prop_value";
     public static final String PROP_NAME = "prop_name";
@@ -52,6 +53,7 @@ public class DBHelper extends SQLiteOpenHelper implements BaseColumns {
             +BaseColumns._ID + " integer primary key autoincrement, "
             + ID_plant + " int, "
             + TYPE + " int, "
+            + ACTUAL + " int, "
             + DATE_TYPE + " CHAR);";
     private static final String DATABASE_CREATE_SCRIPT_TYPE = "create table "
             + TABLE_TYPE+ " ("
@@ -68,13 +70,6 @@ public class DBHelper extends SQLiteOpenHelper implements BaseColumns {
             + ID_plant + " int, "
             + STATUS + " CHAR);";
 
-
-    //
-    static final String TABLE = "users"; // название таблицы в бд
-    // названия столбцов
-    public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_NAME = "name";
-    public static final String COLUMN_YEAR = "year";
     DBHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
 
@@ -99,7 +94,6 @@ public class DBHelper extends SQLiteOpenHelper implements BaseColumns {
         System.out.println("Create DB: "+DATABASE_CREATE_SCRIPT_ACTIVITY);
         System.out.println("Create DB: "+DATABASE_CREATE_SCRIPT_TYPE);
         System.out.println("Insert to DB: "+INSERT_TABLE_TYPE);
-
         System.out.println("Create DB: "+DATABASE_CREATE_SCRIPT_STATUS);
 
 

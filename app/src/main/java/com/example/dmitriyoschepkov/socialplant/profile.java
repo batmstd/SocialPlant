@@ -18,7 +18,7 @@ public class profile extends AppCompatActivity {
     public SQLiteDatabase mSqLiteDatabase;
     private TextView about;
     private TextView date_create;
-    TextView type1, type2, type3, type4, type5;
+    TextView type1, type2, type3, type4;
     public  int position;
     public  int id;
 

@@ -53,7 +53,7 @@ public class edit extends AppCompatActivity {
         mSqLiteDatabase.execSQL(updateName);
         mSqLiteDatabase.execSQL(updateAbout);
         mSqLiteDatabase.close();
-        Intent intentBack = new Intent(getApplicationContext(), profile.class);
+        Intent intentBack = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intentBack);
         Toast toast = Toast.makeText(getApplicationContext(),
                 "Отредактировано",

@@ -38,10 +38,14 @@ public class Receiver extends BroadcastReceiver {
                 "ON table_activity.type=table_type.prop_name " +
                 "where date_type ='"+currentDate+"';";
         mDatabaseHelper = new DBHelper(context, "plant.db", null, DBHelper.DATABASE_VERSION);
-        mSqLiteDatabase = mDatabaseHelper.getReadableDatabase();
+        mSqLiteDatabase = mDatabaseHelper.getWritableDatabase();
         Cursor cursor = mSqLiteDatabase.rawQuery(selectToday, null);
+        String updateActual = "update table_activity set actual = 1 where date_type = '"+currentDate+"';";
+        Cursor updateCursor = mSqLiteDatabase.rawQuery(updateActual, null);
         int count = cursor.getCount();
+        int countUpdate = updateCursor.getCount();
         System.out.println("Строк по join дате: "+ count);
+        System.out.println("update: "+ countUpdate);
         if (count==0){
             System.out.print("сегодня событий нет");
         }else if(count==1){
