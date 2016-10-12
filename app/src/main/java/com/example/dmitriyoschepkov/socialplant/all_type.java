@@ -61,7 +61,7 @@ public class all_type extends AppCompatActivity {
                 "ON table_plant._ID=table_activity.id_plant " +
                 "INNER JOIN table_type " +
                 "ON table_activity.type=table_type.prop_name " +
-                "where actual is not 1;", null);
+                "where actual is not 1 order by date_type;", null);
         String[] headers = new String[] {DBHelper.DATE_TYPE, DBHelper.NAME, DBHelper.PROP_VALUE};
         userAdapter = new SimpleCursorAdapter(this, R.layout.card_for_all_events,
                 userCursor, headers, new int[]{R.id.textDate,R.id.textName, R.id.textType}, 0);
