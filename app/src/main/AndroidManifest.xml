@@ -50,7 +50,8 @@
             android:name=".edit"
             android:label="@string/title_activity_edit"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".all_type"></activity>
+        <activity android:name=".all_type" />
+        <activity android:name=".add_profile"></activity>
     </application>
 
 </manifest>

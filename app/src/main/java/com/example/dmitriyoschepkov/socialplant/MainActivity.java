@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
     public void add (View view){
-        Intent intent = new Intent(MainActivity.this, add.class);
+        Intent intent = new Intent(MainActivity.this, add_profile.class);
         startActivity(intent);
     }
 }
