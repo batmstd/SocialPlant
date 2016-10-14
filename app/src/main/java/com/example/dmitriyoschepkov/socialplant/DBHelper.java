@@ -15,7 +15,7 @@ public class DBHelper extends SQLiteOpenHelper implements BaseColumns {
     //name BD
     private static final String DATABASE_NAME = "social.db";
     //version
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 4;
 
 
     //name  table

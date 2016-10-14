@@ -107,4 +107,5 @@
     </string>
     <string name="title_activity_add_type">add_type</string>
     <string name="title_activity_edit">edit</string>
+    <string name="title_activity_add_profile">add_profile</string>
 </resources>

@@ -95,12 +95,13 @@ public class MainActivity extends AppCompatActivity
         mSqLiteDatabase = mDatabaseHelper.getReadableDatabase();
         //получаем данные из бд
         userCursor =  mSqLiteDatabase.rawQuery("select * from table_plant", null);
-        String[] headers = new String[] {DBHelper.NAME};
-        userAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1,
-                userCursor, headers, new int[]{android.R.id.text1, android.R.id.text2}, 0);
+        String[] headers = new String[] {DBHelper.NAME, DBHelper.IMAGE};
+        userAdapter = new SimpleCursorAdapter(this, R.layout.main_cards_list_view,
+                userCursor, headers, new int[]{R.id.namePlant, R.id.imageView2}, 0);
         System.out.println("Найдено элементов: " + String.valueOf(userCursor.getCount()));
         System.out.println(userAdapter);
         mList.setAdapter(userAdapter);
+        mList.setDivider(null);
     }
 
     @Override

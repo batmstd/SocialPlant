@@ -3,6 +3,7 @@ package com.example.dmitriyoschepkov.socialplant;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class profile extends AppCompatActivity {
@@ -54,6 +56,16 @@ public class profile extends AppCompatActivity {
         String text = select_id + ", " + select_date + ", " + select_name + ", " + select_image + ", " + select_about;
         System.out.println(text);
         String text_about = select_about;
+        ImageView imageTest = (ImageView)findViewById(R.id.backdrop);
+        /*if (select_image == "null"){
+            imageTest.setImageResource(R.drawable.plant);
+        }else imageTest.setImageURI(Uri.parse(select_image));*/
+        if (select_image != null){
+            imageTest.setImageURI(Uri.parse(select_image));
+        }else if (select_image == null){
+            imageTest.setImageResource(R.drawable.plant);
+        }
+
         //заполняем данные
         setTitle(select_name);
         about.setText(text_about);
@@ -114,7 +126,7 @@ public class profile extends AppCompatActivity {
         typeCursor2.close();
         typeCursor3.close();
         typeCursor4.close();
-
+        mSqLiteDatabase.close();
     }
     public void profile_add_type(View view){
         Intent intent = new Intent(getApplicationContext(), add_type.class);

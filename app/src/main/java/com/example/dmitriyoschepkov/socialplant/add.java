@@ -3,7 +3,10 @@ package com.example.dmitriyoschepkov.socialplant;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,14 +15,20 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class add extends AppCompatActivity {
     public DBHelper mDatabaseHelper;
     public SQLiteDatabase mSqLiteDatabase;
+    private Button loadButton;
+    private ImageView image;
+    private static final int REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +40,37 @@ public class add extends AppCompatActivity {
         mDatabaseHelper = new DBHelper(this, "plant.db", null, DBHelper.DATABASE_VERSION);
         mSqLiteDatabase = mDatabaseHelper.getWritableDatabase();
         setTitle("Создание");
+        image = (ImageView) findViewById(R.id.imageView1);
+        loadButton = (Button) findViewById(R.id.button1);
     }
+
+    public void onClick1(View view) {
+
+        Intent i = new Intent(Intent.ACTION_PICK);
+        i.setType("image/*");
+        startActivityForResult(i, REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        Bitmap img = null;
+
+        if (requestCode == REQUEST && resultCode == RESULT_OK) {
+            Uri selectedImage = data.getData();
+            try {
+                img = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            image.setImageBitmap(img);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
     public void add(View view){
         Date currentDate = new Date();
         SimpleDateFormat dateFormat = null;
@@ -65,7 +104,5 @@ public class add extends AppCompatActivity {
         mSqLiteDatabase.close();
     }
 
-    public void photo (View v){
-        startService(new Intent(this, MyService.class));
-    }
+
 }
