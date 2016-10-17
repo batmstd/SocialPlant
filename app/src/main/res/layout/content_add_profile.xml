@@ -16,26 +16,28 @@
         <ImageView
             android:id="@+id/imageView1"
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:layout_above="@+id/button1"
+            android:layout_height="100dp"
+            android:layout_above="@+id/editPhoto1"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_alignRight="@+id/button1"
+            android:layout_alignRight="@+id/editPhoto1"
             android:src="@drawable/ic_add_white_48dp" />
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/editPhoto1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:text="Загрузить" />
+            android:text="Загрузить"
+            android:background="@color/accent_material_light"
+            android:textColor="#ffffff" />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/add_name"
-            android:layout_above="@id/button1"
+            android:layout_above="@id/editPhoto1"
             android:hint="Введите имя" />
 
         <EditText

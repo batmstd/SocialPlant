@@ -1,14 +1,12 @@
 package com.example.dmitriyoschepkov.socialplant;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -41,7 +39,7 @@ public class add extends AppCompatActivity {
         mSqLiteDatabase = mDatabaseHelper.getWritableDatabase();
         setTitle("Создание");
         image = (ImageView) findViewById(R.id.imageView1);
-        loadButton = (Button) findViewById(R.id.button1);
+        loadButton = (Button) findViewById(R.id.editPhoto1);
     }
 
     public void onClick1(View view) {
@@ -76,8 +74,8 @@ public class add extends AppCompatActivity {
         SimpleDateFormat dateFormat = null;
         dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         mSqLiteDatabase = mDatabaseHelper.getWritableDatabase();
-        EditText name = (EditText)findViewById(R.id.name);
-        EditText about = (EditText)findViewById(R.id.about);
+        EditText name = (EditText)findViewById(R.id.add_name);
+        EditText about = (EditText)findViewById(R.id.add_about);
         String name_plant = name.getText().toString();
         String about_plant = about.getText().toString();
         String img = "NULL";

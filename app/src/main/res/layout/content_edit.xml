@@ -12,19 +12,58 @@
     tools:context="com.example.dmitriyoschepkov.socialplant.edit"
     tools:showIn="@layout/activity_edit">
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editName"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:hint="Введите новое имя" />
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editAbout"
-        android:layout_below="@+id/editName"
-        android:layout_alignParentStart="true"
-        android:hint="Введите новое описание" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/editImage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_above="@+id/editPhoto1"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignRight="@+id/editPhoto1"
+                android:src="@drawable/ic_photo_camera_black_48dp" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editName"
+                android:hint="Введите имя"
+                android:textSize="30dp"
+                android:layout_marginLeft="20dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/editPhoto1"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:text="Загрузить"
+                android:background="@color/accent_material_light"
+                android:textColor="#ffffff"
+                android:layout_marginTop="1dp"
+                android:onClick="editPhoto" />
+
+        </TableRow>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/editAbout"
+            android:hint="Введите описание"
+            android:layout_marginTop="20dp" />
+
+    </TableLayout>
+
 </RelativeLayout>

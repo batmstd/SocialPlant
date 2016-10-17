@@ -13,7 +13,10 @@ import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -23,6 +26,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.widget.LinearLayoutCompat;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -36,11 +40,17 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -51,9 +61,10 @@ public class MainActivity extends AppCompatActivity
     SQLiteDatabase db;
     Cursor userCursor;
     SimpleCursorAdapter userAdapter;
-    private static final int NOTIFY_ID = 101;
     final String LOG_TAG = "myLogs";
     NotificationManager nm;
+    ArrayList<ListPlants> listPlants = new ArrayList<ListPlants>();
+    ListPlantsAdapter listPlantsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,13 +91,39 @@ public class MainActivity extends AppCompatActivity
                 Intent intent = new Intent(getApplicationContext(), profile.class);
                 intent.putExtra("position", position);
                 startActivity(intent);
-
-
             }
         });
         sqlHelper = new DBHelper(getApplicationContext());
         startService(new Intent(this, MyService.class));
+        //
+        fillData();
+        listPlantsAdapter = new ListPlantsAdapter(this, listPlants);
+        ListView lvMain = (ListView)findViewById(R.id.list);
+        lvMain.setAdapter(listPlantsAdapter);
+
     }
+    void fillData(){
+        db = sqlHelper.getReadableDatabase();
+        mSqLiteDatabase = mDatabaseHelper.getReadableDatabase();
+        userCursor =  mSqLiteDatabase.rawQuery("select * from table_plant", null);
+        String[] headers = new String[] {DBHelper.NAME, DBHelper.ABOUT, DBHelper.IMAGE};
+        userAdapter = new SimpleCursorAdapter(this, R.layout.main_cards_list_view,
+                userCursor, headers, new int[]{R.id.namePlant, R.id.aboutPlant, R.id.imageView2}, 0);
+        System.out.println("Найдено элементов: " + String.valueOf(userCursor.getCount()));
+        System.out.println(userAdapter);
+        userCursor.moveToFirst();
+        String namePlant;
+        String imagePlant;
+        String aboutPlant;
+        while (userCursor.isAfterLast()==false){
+            namePlant = userCursor.getString(userCursor.getColumnIndex(DBHelper.NAME));
+            imagePlant = userCursor.getString(userCursor.getColumnIndex(DBHelper.IMAGE));
+            aboutPlant = userCursor.getString(userCursor.getColumnIndex(DBHelper.ABOUT));
+            listPlants.add(new ListPlants(namePlant+" ", imagePlant, aboutPlant));
+            userCursor.moveToNext();
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -100,14 +137,12 @@ public class MainActivity extends AppCompatActivity
                 userCursor, headers, new int[]{R.id.namePlant, R.id.imageView2}, 0);
         System.out.println("Найдено элементов: " + String.valueOf(userCursor.getCount()));
         System.out.println(userAdapter);
-        mList.setAdapter(userAdapter);
         mList.setDivider(null);
     }
 
     @Override
     public void onDestroy(){
         super.onDestroy();
-        // Закрываем подключения
         db.close();
         userCursor.close();
     }
@@ -143,33 +178,7 @@ public class MainActivity extends AppCompatActivity
             startService(new Intent(this, MyService.class));
         }else if (id == R.id.stop) {
             stopService(new Intent(this, MyService.class));
-        }else if (id == R.id.notification){
-            Context context = getApplicationContext();
-            Intent notificationIntent = new Intent(context, MainActivity.class);
-            PendingIntent contentIntent = PendingIntent.getActivity(context,
-                    0, notificationIntent,
-                    PendingIntent.FLAG_CANCEL_CURRENT);
-            Resources res = context.getResources();
-            Notification.Builder builder = new Notification.Builder(context);
-            builder.setContentIntent(contentIntent)
-                    .setSmallIcon(R.drawable.ic_add_white_48dp)
-                    .setPriority(Notification.PRIORITY_HIGH)
-                    // большая картинка
-                    .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_announcement_black_48dp))
-                    .setTicker(res.getString(R.string.notification)) // текст в строке состояния
-                    .setTicker("Последнее китайское предупреждение!")
-                    .setWhen(System.currentTimeMillis())
-                    .setAutoCancel(true)
-                    //.setContentTitle(res.getString(R.string.notifytitle)) // Заголовок уведомления
-                    .setContentTitle("Напоминание")
-                    //.setContentText(res.getString(R.string.notifytext))
-                    .setContentText("Пора покормить кота"); // Текст уведомления
-
-            Notification notification = builder.build();
-            notification.defaults = Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE;
-            NotificationManager notificationManager = (NotificationManager) context
-                    .getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(NOTIFY_ID, notification);
+        }else if (id == R.id.notification) {
         }
         return super.onOptionsItemSelected(item);
     }
@@ -204,4 +213,6 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(MainActivity.this, add_profile.class);
         startActivity(intent);
     }
+
 }
+

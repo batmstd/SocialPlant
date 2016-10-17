@@ -1,8 +1,11 @@
 package com.example.dmitriyoschepkov.socialplant;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 public class profile extends AppCompatActivity {
     public DBHelper mDatabaseHelper;
@@ -57,14 +62,21 @@ public class profile extends AppCompatActivity {
         System.out.println(text);
         String text_about = select_about;
         ImageView imageTest = (ImageView)findViewById(R.id.backdrop);
-        /*if (select_image == "null"){
-            imageTest.setImageResource(R.drawable.plant);
-        }else imageTest.setImageURI(Uri.parse(select_image));*/
+
         if (select_image != null){
-            imageTest.setImageURI(Uri.parse(select_image));
+            Context context = getApplicationContext();
+            Picasso.Builder picassoBuilder = new Picasso.Builder(context);
+            Picasso picasso = picassoBuilder.build();
+            picasso.load(Uri.parse("file://"+select_image))
+                    .fit()
+                    .placeholder(R.drawable.plant)
+                    .error(R.drawable.plant)
+                    .centerInside()
+                    .into(imageTest);
         }else if (select_image == null){
             imageTest.setImageResource(R.drawable.plant);
         }
+
 
         //заполняем данные
         setTitle(select_name);
@@ -128,6 +140,7 @@ public class profile extends AppCompatActivity {
         typeCursor4.close();
         mSqLiteDatabase.close();
     }
+
     public void profile_add_type(View view){
         Intent intent = new Intent(getApplicationContext(), add_type.class);
         intent.putExtra("id", id);
@@ -159,5 +172,4 @@ public class profile extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 }

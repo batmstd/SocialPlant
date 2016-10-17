@@ -2,7 +2,6 @@ package com.example.dmitriyoschepkov.socialplant;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -11,17 +10,15 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore.Images.Media;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,18 +43,16 @@ public class add_profile extends AppCompatActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_profile);
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
         image = (ImageView) findViewById(R.id.imageView1);
-        loadButton = (Button) findViewById(R.id.button1);
-
+        loadButton = (Button) findViewById(R.id.editPhoto1);
+        ImageView image = (ImageView)findViewById(R.id.imageView);
+        setTitle(" ");
         loadButton.setOnClickListener(this);
         requestWritePermission();
-        //image.setImageURI(Uri.parse("/storage/emulated/0/DCIM/100ANDRO/DSC_0017.JPG"));
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -70,10 +65,12 @@ public class add_profile extends AppCompatActivity implements
         }
     }
 
-    private void requestWritePermission(){
-        if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},WRITE_PERMISSION);
-        }
+    private void requestWritePermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+       if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+     ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},WRITE_PERMISSION);
+ }
+    }
     }
     public boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();

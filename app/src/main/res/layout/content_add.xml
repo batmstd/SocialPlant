@@ -15,60 +15,37 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TableRow
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_above="@+id/editPhoto1"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/editPhoto1"
+            android:src="@drawable/plant" />
+
+        <Button
+            android:id="@+id/editPhoto1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="Загрузить"
+            android:background="@color/accent_material_light"
+            android:textColor="#ffffff" />
 
-            <ImageView
-                android:id="@+id/imageView1"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_above="@+id/photo"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignRight="@+id/photo"
-                android:src="@drawable/ic_add_white_48dp" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addName"
+            android:hint="Введите имя" />
 
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="20dp">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Загрузка фото"
-                android:id="@+id/button1"
-                android:onClick="onClick1" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="300dp"
-            android:layout_height="40dp">
-
-            <EditText
-                android:layout_width="320dp"
-                android:layout_height="50dp"
-                android:id="@+id/name"
-                android:hint="Имя" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:id="@+id/about"
-                android:lines="10"
-                android:longClickable="false"
-                android:hint="Описание" />
-        </TableRow>
-
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addAbout"
+            android:hint="Введите описание" />
     </TableLayout>
 
 </RelativeLayout>
-
