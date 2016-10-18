@@ -89,7 +89,6 @@ public class add_profile extends AppCompatActivity implements
 
     @Override
     public void onClick(View v) {
-
         Intent i = new Intent(Intent.ACTION_PICK);
         i.setType("image/*");
         startActivityForResult(i, REQUEST);

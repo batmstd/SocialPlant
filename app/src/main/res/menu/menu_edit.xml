@@ -14,4 +14,5 @@
         android:title="@string/editProfile"
         android:icon="@drawable/ic_mode_edit_white_48dp"
         app:showAsAction="always"/>
+
 </menu>

@@ -83,22 +83,16 @@ public class edit extends AppCompatActivity implements
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.SaveProfile) {
             System.out.println("plz2 "+filePath);
-            String img;
-            //System.out.println("plz "+selectedImage.toString());
-            img = filePath;
+            String imgI;
+            imgI = filePath;
             String newName = editName.getText().toString();
             String newAbout = editAbout.getText().toString();
             String updateName = "update table_plant set name ='"+newName+"' where _id="+id_plant;
             String updateAbout = "update table_plant set about ='"+newAbout+"' where _id="+id_plant;
-            String updateImage = "update table_plant set image ='"+img+"' where _id="+id_plant;
+            String updateImage = "update table_plant set image ='"+imgI+"' where _id="+id_plant;
             mSqLiteDatabase.execSQL(updateName);
             mSqLiteDatabase.execSQL(updateAbout);
             mSqLiteDatabase.execSQL(updateImage);
@@ -112,13 +106,11 @@ public class edit extends AppCompatActivity implements
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onClick(View v) {
-
         Intent i = new Intent(Intent.ACTION_PICK);
         i.setType("image/*");
         startActivityForResult(i, REQUEST);
@@ -126,11 +118,8 @@ public class edit extends AppCompatActivity implements
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         Bitmap img = null;
-
         if (requestCode == REQUEST && resultCode == RESULT_OK) {
-
             Uri selectedImage = data.getData();
             try {
                 img = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
@@ -144,14 +133,21 @@ public class edit extends AppCompatActivity implements
             System.out.println("original "+selectedImage.toString());
             Intent intentImg = new Intent(getApplicationContext(), edit.class);
             intentImg.putExtra("img", selectedImage.toString());
-            //startActivityForResult(intentImg,1);
             Cursor cursor = getContentResolver().query(selectedImage, new String[] {
                     android.provider.MediaStore.Images.ImageColumns.DATA }, null, null, null);
             cursor.moveToFirst();
             filePath = cursor.getString(0);
             cursor.close();
             System.out.println("plz "+filePath);
-
+            Context context = getApplicationContext();
+            Picasso.Builder picassoBuilder = new Picasso.Builder(context);
+            Picasso picasso = picassoBuilder.build();
+            picasso.load(Uri.parse("file://"+filePath))
+                    .fit()
+                    .placeholder(R.drawable.plant)
+                    .error(R.drawable.plant)
+                    .centerInside()
+                    .into(image1);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

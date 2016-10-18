@@ -27,7 +27,7 @@ public class profile extends AppCompatActivity {
     private TextView date_create;
     TextView type1, type2, type3, type4;
     public  int position;
-    public  int id;
+    public  int id, idUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +35,8 @@ public class profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         about = (TextView) findViewById(R.id.profile_about);
         type1 = (TextView) findViewById(R.id.type1);
@@ -47,6 +49,7 @@ public class profile extends AppCompatActivity {
         System.out.println("Position: " + position);
         //делаем соотношение с айди
         id = position + 1;
+        idUpdate = position+1;
         //идем в бд за данными
         String select = "select * from table_plant where _id = " + id;
         mDatabaseHelper = new DBHelper(this, "plant.db", null, DBHelper.DATABASE_VERSION);
@@ -152,6 +155,7 @@ public class profile extends AppCompatActivity {
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -164,10 +168,12 @@ public class profile extends AppCompatActivity {
             Intent intent_update = getIntent();
             finish();
             startActivity(intent_update);
-        }else  if (id == R.id.editProfile){
+        }else  if (id == R.id.editProfile) {
             Intent intentEdit = new Intent(getApplicationContext(), edit.class);
             intentEdit.putExtra("position", position);
             startActivity(intentEdit);
+        }else if (id ==android.R.id.home){
+
         }
 
         return super.onOptionsItemSelected(item);

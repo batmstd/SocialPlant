@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.dmitriyoschepkov.socialplant">
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_local_florist_teal_600_48dp"
@@ -20,17 +22,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".add"
-            android:label="@string/title_activity_add"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".profile"
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-        android:name=".add_type"
-        android:label="@string/title_activity_add_type"
-        android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".add_type"
+            android:label="@string/title_activity_add_type"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".add_profile"
             android:label="@string/title_activity_add_profile" />
@@ -49,13 +47,24 @@
                 <action android:name="someAction" />
             </intent-filter>
         </receiver>
+        <receiver
+            android:name=".ReceiverUpdate"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="someAction" />
+            </intent-filter>
+        </receiver>
 
         <activity
             android:name=".edit"
             android:label="@string/title_activity_edit"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".all_type" />
-
+        <activity
+            android:name=".all_type"
+            />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
     </application>
 
 </manifest>
