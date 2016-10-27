@@ -1,6 +1,7 @@
 package com.example.dmitriyoschepkov.socialplant;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,15 +9,19 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -28,6 +33,7 @@ public class profile extends AppCompatActivity {
     TextView type1, type2, type3, type4;
     public  int position;
     public  int id, idUpdate;
+    public String select_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +57,17 @@ public class profile extends AppCompatActivity {
         id = position + 1;
         idUpdate = position+1;
         //идем в бд за данными
-        String select = "select * from table_plant where _id = " + id;
+        //String select = "select * from table_plant where _id = " + id;
+        String select = "select * from table_plant";
         mDatabaseHelper = new DBHelper(this, "plant.db", null, DBHelper.DATABASE_VERSION);
         mSqLiteDatabase = mDatabaseHelper.getReadableDatabase();
         Cursor cursor = mSqLiteDatabase.rawQuery(select, null);
-        cursor.moveToFirst();
+        cursor.moveToPosition(position);
         String select_date = cursor.getString(cursor.getColumnIndex(DBHelper.DATE_CREATE));
         String select_name = cursor.getString(cursor.getColumnIndex(DBHelper.NAME));
         String select_image = cursor.getString(cursor.getColumnIndex(DBHelper.IMAGE));
         String select_about = cursor.getString(cursor.getColumnIndex(DBHelper.ABOUT));
-        String select_id = cursor.getString(cursor.getColumnIndex(DBHelper._ID));
+       select_id = cursor.getString(cursor.getColumnIndex(DBHelper._ID));
         String text = select_id + ", " + select_date + ", " + select_name + ", " + select_image + ", " + select_about;
         System.out.println(text);
         String text_about = select_about;
@@ -173,6 +180,39 @@ public class profile extends AppCompatActivity {
             intentEdit.putExtra("position", position);
             startActivity(intentEdit);
         }else if (id ==android.R.id.home){
+
+        }else if (id == R.id.deleteProfile){
+
+            AlertDialog.Builder complete = new AlertDialog.Builder(profile.this);
+            complete.setTitle("Вы действительно хотите удалить?");
+            complete.setMessage("восстановить данные будет невозможно, подтвердите удаление");
+            complete.setPositiveButton("удалить", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String liveNo = "delete from table_plant where _id = " + select_id;
+                    mDatabaseHelper = new DBHelper(profile.this, "plant.db", null, DBHelper.DATABASE_VERSION);
+                    mSqLiteDatabase = mDatabaseHelper.getReadableDatabase();
+                    mSqLiteDatabase.execSQL(liveNo);
+                    System.out.println(liveNo);
+                    Intent intentBack = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intentBack);
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Удалено :(",
+                            Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                    mSqLiteDatabase.close();
+                }
+            });
+            complete.setNeutralButton("отмена", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                  finish();
+                }
+            });
+            complete.show();
+
+
 
         }
 

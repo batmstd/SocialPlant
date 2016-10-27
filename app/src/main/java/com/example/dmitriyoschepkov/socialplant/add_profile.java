@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,10 +14,13 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.provider.MediaStore.Images.Media;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -48,10 +52,11 @@ public class add_profile extends AppCompatActivity implements
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
         image = (ImageView) findViewById(R.id.imageView1);
-        loadButton = (Button) findViewById(R.id.editPhoto1);
+       // loadButton = (Button) findViewById(R.id.editPhoto1);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.editPhoto1);
         ImageView image = (ImageView)findViewById(R.id.imageView);
         setTitle(" ");
-        loadButton.setOnClickListener(this);
+        fab.setOnClickListener(this);
         requestWritePermission();
     }
     @Override
@@ -89,9 +94,26 @@ public class add_profile extends AppCompatActivity implements
 
     @Override
     public void onClick(View v) {
-        Intent i = new Intent(Intent.ACTION_PICK);
-        i.setType("image/*");
-        startActivityForResult(i, REQUEST);
+
+        AlertDialog.Builder complete = new AlertDialog.Builder(add_profile.this);
+        complete.setMessage("Выберите вариант загрузки:");
+        complete.setPositiveButton("Галерея", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent i = new Intent(Intent.ACTION_PICK);
+                i.setType("image/*");
+                startActivityForResult(i, REQUEST);
+            }
+        });
+        complete.setNeutralButton("Камера", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//(Intent.ACTION_PICK);
+                 startActivityForResult(i, REQUEST);
+            }
+        });
+        complete.show();
+
     }
 
     @Override
@@ -149,12 +171,12 @@ public class add_profile extends AppCompatActivity implements
                     + DBHelper.DATE_CREATE + ", "
                     + DBHelper.NAME + ", "
                     + DBHelper.IMAGE + ", "
-                    + DBHelper.ABOUT + ") "
+                    + DBHelper.ABOUT + ", live) "
                     + "values ('"
                     + dateFormat.format(currentDate)+ "', '"
                     + name_plant+ "', '"
                     + img + "', '"
-                    + about_plant +"');";
+                    + about_plant + "', 'yes');";
             mSqLiteDatabase.execSQL(insert_new_plant);
             System.out.println("insert to DB: "+insert_new_plant);
             Intent intentBack = new Intent(getApplicationContext(), MainActivity.class);

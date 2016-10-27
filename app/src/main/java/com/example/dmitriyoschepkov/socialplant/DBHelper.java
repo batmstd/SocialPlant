@@ -15,7 +15,7 @@ public class DBHelper extends SQLiteOpenHelper implements BaseColumns {
     //name BD
     private static final String DATABASE_NAME = "social.db";
     //version
-    public static final int DATABASE_VERSION = 5;
+    public static final int DATABASE_VERSION = 7;
 
 
     //name  table
@@ -29,6 +29,7 @@ public class DBHelper extends SQLiteOpenHelper implements BaseColumns {
     public static final String NAME = "name";
     public static final String IMAGE = "image";
     public static final String ABOUT = "about";
+    public static final String LIVE = "live";
     //status
     public static final String STATUS = "status";
     // table activity
@@ -47,7 +48,8 @@ public class DBHelper extends SQLiteOpenHelper implements BaseColumns {
             + NAME + " CHAR, "
             + IMAGE + " CHAR, "
             + ABOUT + " CHAR, "
-            + STATUS + " CHAR);";
+            + STATUS + " CHAR, "
+            + LIVE + "TEXT);";
     private static final String DATABASE_CREATE_SCRIPT_ACTIVITY = "create table "
             + TABLE_ACTIVITY+ " ("
             +BaseColumns._ID + " integer primary key autoincrement, "
@@ -105,13 +107,19 @@ public class DBHelper extends SQLiteOpenHelper implements BaseColumns {
         Log.w("SQLite", "Обновляемся с версии " + oldVersion + " на версию " + newVersion);
 
         // Удаляем старую таблицу и создаём новую
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLANT);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ACTIVITY);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TYPE);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATUS);
+        //db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLANT);
+       // db.execSQL("DROP TABLE IF EXISTS " + TABLE_ACTIVITY);
+        //db.execSQL("DROP TABLE IF EXISTS " + TABLE_TYPE);
+        //db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATUS);
 
         // Создаём новую таблицу
-        onCreate(db);
+       // onCreate(db);
+        //String updateColumn = "ALTER TABLE table_plant ADD COLUMN live TEXT";
+        String updateLive = "update table_plant set live = 'yes';";
+        //db.execSQL(updateColumn);
+        db.execSQL(updateLive);
+        //System.out.println("add column: "+updateColumn+" updateLive: "+updateLive);
+
     }
     @Override
     public void onDowngrade (SQLiteDatabase db, int oldVersion, int newVersion){

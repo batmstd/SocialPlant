@@ -23,6 +23,8 @@ public  class  ReceiverUpdate extends BroadcastReceiver {
     public SQLiteDatabase mSqLiteDatabase;
     @Override
     public void onReceive(Context context, Intent intent){
+        intent.getAction();
+
         String currentDate = DateUtils.formatDateTime(context,
                 dateAndTime.getTimeInMillis(),
                 DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR);
@@ -33,5 +35,6 @@ public  class  ReceiverUpdate extends BroadcastReceiver {
         System.out.println("update: "+ countUpdate);
         updateCursor.close();
         mDatabaseHelper.close();
+
     }
 }

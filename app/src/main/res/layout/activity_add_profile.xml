@@ -37,18 +37,21 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="-60dp">
 
-            <Button
+            <android.support.design.widget.FloatingActionButton
                 android:id="@+id/editPhoto1"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="50dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:text="Загрузить"
                 android:background="@color/accent_material_light"
+                android:src="@drawable/ic_insert_photo_white_18dp"
                 android:textColor="#ffffff"
-                android:layout_marginTop="1dp" />
+                android:allowUndo="false"
+                android:layout_marginLeft="50dp" />
 
         </TableRow>
 

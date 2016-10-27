@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity
     void fillData(){
         db = sqlHelper.getReadableDatabase();
         mSqLiteDatabase = mDatabaseHelper.getReadableDatabase();
-        userCursor =  mSqLiteDatabase.rawQuery("select * from table_plant", null);
+        userCursor =  mSqLiteDatabase.rawQuery("select * from table_plant where live = 'yes'", null);
         String[] headers = new String[] {DBHelper.NAME, DBHelper.ABOUT, DBHelper.IMAGE};
         userAdapter = new SimpleCursorAdapter(this, R.layout.main_cards_list_view,
                 userCursor, headers, new int[]{R.id.namePlant, R.id.aboutPlant, R.id.imageView2}, 0);

@@ -33,7 +33,6 @@ public class MyService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(LOG_TAG, "Служба в работе");
         setAlarm(this);
-        setUpdate(this);
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -63,19 +62,6 @@ public class MyService extends Service {
         }else am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis() ,AlarmManager.INTERVAL_DAY, pendingIntent);
 
     }
-    public  static void setUpdate(Context ctx){
-        Calendar calendarUpdate = Calendar.getInstance();
-        calendarUpdate.set(Calendar.HOUR_OF_DAY, 23);
-        calendarUpdate.set(Calendar.MINUTE, 55);
-        calendarUpdate.set(Calendar.SECOND, 0);
-        AlarmManager amUpdate = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(ctx, ReceiverUpdate.class);
-        intent.setAction("update");
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(ctx, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        if (calendarUpdate.getTimeInMillis()<System.currentTimeMillis()+500){
-            amUpdate.setRepeating(AlarmManager.RTC_WAKEUP, calendarUpdate.getTimeInMillis() +24*60*60*1000,AlarmManager.INTERVAL_DAY, pendingIntent);
-            System.out.println("Сейчас: "+System.currentTimeMillis()+", передвигаем на: "+calendarUpdate.getTimeInMillis() +24*60*60*1000);
-        }else amUpdate.setRepeating(AlarmManager.RTC_WAKEUP, calendarUpdate.getTimeInMillis() ,AlarmManager.INTERVAL_DAY, pendingIntent);
-    }
+
 
 }

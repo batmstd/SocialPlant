@@ -14,5 +14,10 @@
         android:title="@string/editProfile"
         android:icon="@drawable/ic_mode_edit_white_48dp"
         app:showAsAction="always"/>
+    <item
+        android:id="@+id/deleteProfile"
+        android:orderInCategory="100"
+        android:title="Удалить"
+        app:showAsAction="never"/>
 
 </menu>
