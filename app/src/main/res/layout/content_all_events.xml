@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.example.dmitriyoschepkov.socialplant.all_type"
-    android:background="#f3f3f3">
-
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.dmitriyoschepkov.socialplant.allEvents"
+    tools:showIn="@layout/activity_all_events">
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -17,5 +16,6 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:id="@+id/mListAll" />
- </LinearLayout>
-</android.support.design.widget.CoordinatorLayout>
+    </LinearLayout>
+
+</RelativeLayout>

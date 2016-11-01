@@ -48,14 +48,22 @@ public class add_profile extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_profile);
+        setContentView(R.layout.activity_addprofile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         image = (ImageView) findViewById(R.id.imageView1);
        // loadButton = (Button) findViewById(R.id.editPhoto1);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.editPhoto1);
         ImageView image = (ImageView)findViewById(R.id.imageView);
-        setTitle(" ");
+        setTitle("Добавление");
         fab.setOnClickListener(this);
         requestWritePermission();
     }

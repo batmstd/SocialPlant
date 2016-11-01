@@ -31,9 +31,10 @@ public class profile extends AppCompatActivity {
     private TextView about;
     private TextView date_create;
     TextView type1, type2, type3, type4;
-    public  int position;
+    public  int position, position_from_all;
     public  int id, idUpdate;
-    public String select_id;
+    public String select_id, sendSelect_id;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,12 @@ public class profile extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         about = (TextView) findViewById(R.id.profile_about);
         type1 = (TextView) findViewById(R.id.type1);
@@ -68,10 +75,11 @@ public class profile extends AppCompatActivity {
         String select_image = cursor.getString(cursor.getColumnIndex(DBHelper.IMAGE));
         String select_about = cursor.getString(cursor.getColumnIndex(DBHelper.ABOUT));
        select_id = cursor.getString(cursor.getColumnIndex(DBHelper._ID));
+        sendSelect_id = select_id;
         String text = select_id + ", " + select_date + ", " + select_name + ", " + select_image + ", " + select_about;
         System.out.println(text);
         String text_about = select_about;
-        ImageView imageTest = (ImageView)findViewById(R.id.backdrop);
+        ImageView imageEdit = (ImageView)findViewById(R.id.backdrop);
 
         if (select_image != null){
             Context context = getApplicationContext();
@@ -82,9 +90,9 @@ public class profile extends AppCompatActivity {
                     .placeholder(R.drawable.plant)
                     .error(R.drawable.plant)
                     .centerInside()
-                    .into(imageTest);
+                    .into(imageEdit);
         }else if (select_image == null){
-            imageTest.setImageResource(R.drawable.plant);
+            imageEdit.setImageResource(R.drawable.plant);
         }
 
 
@@ -96,10 +104,10 @@ public class profile extends AppCompatActivity {
 
         //заполняем события
         //type1
-        String selectType1 = "select * from table_activity where type = 1 and id_plant = " + id;
+        String selectType1 = "select * from table_activity where type = 1 and id_plant = " + select_id;
         Cursor typeCursor1 = mSqLiteDatabase.rawQuery(selectType1, null);
         int strok1 = typeCursor1.getCount();
-        System.out.println("Строк для тайп 1 и айди " + id + " равно: " + strok1);
+        System.out.println("Строк для тайп 1 и айди " + select_id + " равно: " + strok1);
         if (strok1 == 0) {
             type1.setText("Событий нет.");
         } else if (strok1 > 0) {
@@ -109,10 +117,10 @@ public class profile extends AppCompatActivity {
         }
 
         //type2
-        String selectType2 = "select * from table_activity where type = 2 and id_plant  = " + id;
+        String selectType2 = "select * from table_activity where type = 2 and id_plant  = " + select_id;
         Cursor typeCursor2 = mSqLiteDatabase.rawQuery(selectType2, null);
         int strok2 = typeCursor2.getCount();
-        System.out.println("Строк для тайп 1 и айди " + id + " равно: " + strok2);
+        System.out.println("Строк для тайп 1 и айди " + select_id + " равно: " + strok2);
         if (strok2 == 0) {
             type2.setText("Событий нет.");
         } else if (strok2 > 0) {
@@ -121,10 +129,10 @@ public class profile extends AppCompatActivity {
             type2.setText(" "+settype2);
         }
         //type3
-        String selectType3 = "select * from table_activity where type = 3 and id_plant  = " + id;
+        String selectType3 = "select * from table_activity where type = 3 and id_plant  = " + select_id;
         Cursor typeCursor3 = mSqLiteDatabase.rawQuery(selectType3, null);
         int strok3 = typeCursor3.getCount();
-        System.out.println("Строк для тайп 1 и айди " + id + " равно: " + strok3);
+        System.out.println("Строк для тайп 1 и айди " + select_id + " равно: " + strok3);
         if (strok3 == 0) {
             type3.setText("Событий нет.");
         } else if (strok3 > 0) {
@@ -133,10 +141,10 @@ public class profile extends AppCompatActivity {
             type3.setText(" "+settype3);
         }
         //type4
-        String selectType4 = "select * from table_activity where type = 4 and id_plant  = " + id;
+        String selectType4 = "select * from table_activity where type = 4 and id_plant  = " + select_id;
         Cursor typeCursor4 = mSqLiteDatabase.rawQuery(selectType4, null);
         int strok4 = typeCursor4.getCount();
-        System.out.println("Строк для тайп 1 и айди " + id + " равно: " + strok4);
+        System.out.println("Строк для тайп 1 и айди " + select_id + " равно: " + strok4);
         if (strok4 == 0) {
             type4.setText("Событий нет.");
         } else if (strok4 > 0) {
@@ -153,7 +161,7 @@ public class profile extends AppCompatActivity {
 
     public void profile_add_type(View view){
         Intent intent = new Intent(getApplicationContext(), add_type.class);
-        intent.putExtra("id", id);
+        intent.putExtra("id", position);
         startActivity(intent);
     }
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -177,7 +185,8 @@ public class profile extends AppCompatActivity {
             startActivity(intent_update);
         }else  if (id == R.id.editProfile) {
             Intent intentEdit = new Intent(getApplicationContext(), edit.class);
-            intentEdit.putExtra("position", position);
+            intentEdit.putExtra("sendSelect_id", position);
+            System.out.println("sendId: "+position);
             startActivity(intentEdit);
         }else if (id ==android.R.id.home){
 

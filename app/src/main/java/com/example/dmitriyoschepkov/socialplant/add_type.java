@@ -1,6 +1,7 @@
 package com.example.dmitriyoschepkov.socialplant;
 
 import android.app.DatePickerDialog;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -24,6 +25,7 @@ public class add_type extends AppCompatActivity {
     RadioButton type1, type2, type3, type4;
     Calendar dateAndTime=Calendar.getInstance();
     private int id;
+    private String select_id_for_add_type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +33,25 @@ public class add_type extends AppCompatActivity {
         setContentView(R.layout.activity_add_type);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         mDatabaseHelper = new DBHelper(this, "plant.db", null, DBHelper.DATABASE_VERSION);
         mSqLiteDatabase = mDatabaseHelper.getWritableDatabase();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         id = getIntent().getIntExtra("id", 0);
-        System.out.println("ID: "+id);
+        System.out.println("select_id: "+id);
+        String select = "select * from table_plant";
+        mDatabaseHelper = new DBHelper(this, "plant.db", null, DBHelper.DATABASE_VERSION);
+        mSqLiteDatabase = mDatabaseHelper.getReadableDatabase();
+        Cursor cursor = mSqLiteDatabase.rawQuery(select, null);
+        cursor.moveToPosition(id);
+        select_id_for_add_type = cursor.getString(cursor.getColumnIndex(DBHelper._ID));
         currentDateTime=(TextView)findViewById(R.id.currentDateTime);
         setInitialDateTime();
         setTitle("Добавление события");
@@ -77,8 +93,8 @@ public class add_type extends AppCompatActivity {
         type3 = (RadioButton)findViewById(R.id.type3);
         type4 = (RadioButton)findViewById(R.id.type4);
         if (type1.isChecked()){
-            String insert = "insert into 'table_activity' (id_plant, type, date_type) values ("+
-                    id+", 1, '"+currentDate+"');";
+            String insert = "insert into 'table_activity' (id_plant, type, date_type, actual) values ("+
+                    select_id_for_add_type+", 1, '"+currentDate+"', 0);";
             mSqLiteDatabase.execSQL(insert);
             System.out.println(insert);
             Toast toast = Toast.makeText(getApplicationContext(),
@@ -88,7 +104,7 @@ public class add_type extends AppCompatActivity {
             toast.show();
         }else if (type2.isChecked()){
             String insert = "insert into 'table_activity' (id_plant, type, date_type) values ("+
-                    id+", 2, '"+currentDate+"');";
+                    select_id_for_add_type+", 2, '"+currentDate+"');";
             mSqLiteDatabase.execSQL(insert);
             Toast toast = Toast.makeText(getApplicationContext(),
                     "Событие добавлено",
@@ -97,7 +113,7 @@ public class add_type extends AppCompatActivity {
             toast.show();
         }else if (type3.isChecked()){
             String insert = "insert into 'table_activity' (id_plant, type, date_type) values ("+
-                    id+", 3, '"+currentDate+"');";
+                    select_id_for_add_type+", 3, '"+currentDate+"');";
             mSqLiteDatabase.execSQL(insert);
             Toast toast = Toast.makeText(getApplicationContext(),
                     "Событие добавлено",
@@ -106,14 +122,17 @@ public class add_type extends AppCompatActivity {
             toast.show();
         }else if (type4.isChecked()){
             String insert = "insert into 'table_activity' (id_plant, type, date_type) values ("+
-                    id+", 4, '"+currentDate+"');";
+                    select_id_for_add_type+", 4, '"+currentDate+"');";
+            System.out.print("add type: "+insert);
             mSqLiteDatabase.execSQL(insert);
+            System.out.print("add type: "+insert);
             Toast toast = Toast.makeText(getApplicationContext(),
                     "Событие добавлено",
                     Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         }
+
     }
 
 }

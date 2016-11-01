@@ -60,11 +60,16 @@
             android:label="@string/title_activity_edit"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".all_type"
-            />
-        <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings" />
+        <activity
+            android:name=".addProfile"
+            android:label="@string/title_activity_add_profile"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".allEvents"
+            android:label="@string/title_activity_all_events"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
