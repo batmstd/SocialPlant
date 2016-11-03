@@ -179,12 +179,12 @@ public class add_profile extends AppCompatActivity implements
                     + DBHelper.DATE_CREATE + ", "
                     + DBHelper.NAME + ", "
                     + DBHelper.IMAGE + ", "
-                    + DBHelper.ABOUT + ", live) "
+                    + DBHelper.ABOUT + ") "
                     + "values ('"
                     + dateFormat.format(currentDate)+ "', '"
                     + name_plant+ "', '"
                     + img + "', '"
-                    + about_plant + "', 'yes');";
+                    + about_plant + "');";
             mSqLiteDatabase.execSQL(insert_new_plant);
             System.out.println("insert to DB: "+insert_new_plant);
             Intent intentBack = new Intent(getApplicationContext(), MainActivity.class);

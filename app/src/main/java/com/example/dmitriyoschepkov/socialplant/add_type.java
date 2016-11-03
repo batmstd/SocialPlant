@@ -1,17 +1,22 @@
 package com.example.dmitriyoschepkov.socialplant;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,10 +27,14 @@ public class add_type extends AppCompatActivity {
     TextView currentDateTime;
     public DBHelper mDatabaseHelper;
     public SQLiteDatabase mSqLiteDatabase;
-    RadioButton type1, type2, type3, type4;
     Calendar dateAndTime=Calendar.getInstance();
     private int id;
     private String select_id_for_add_type;
+    ListView listType;
+    Cursor userCursor;
+    SimpleCursorAdapter userAdapter;
+    final String LOG_TAG = "myLogs";
+    public Long typeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +64,26 @@ public class add_type extends AppCompatActivity {
         currentDateTime=(TextView)findViewById(R.id.currentDateTime);
         setInitialDateTime();
         setTitle("Добавление события");
+        listType = (ListView)findViewById(R.id.listType);
+        //
+        userCursor =  mSqLiteDatabase.rawQuery("Select * FROM table_type;", null);
+        System.out.println("Найдено элементов: " + String.valueOf(userCursor.getCount()));
+        listType.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        final String[] headers = new String[] {DBHelper.PROP_VALUE};
+        userAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_single_choice,
+                userCursor, headers, new int[]{android.R.id.text1}, 0);
 
+        System.out.println(userAdapter);
+        listType.setAdapter(userAdapter);
 
+        listType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long checkId) {
+                Log.d(LOG_TAG, "itemClick: position = " + position + ", id = "
+                        + checkId);
+               typeId = checkId;
+            }
+        });
     }
     // отображаем диалоговое окно для выбора даты
     public void setDate(View v) {
@@ -88,51 +115,17 @@ public class add_type extends AppCompatActivity {
         String currentDate = DateUtils.formatDateTime(this,
                 dateAndTime.getTimeInMillis(),
                 DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR);
-        type1 = (RadioButton)findViewById(R.id.type1);
-        type2 = (RadioButton)findViewById(R.id.type2);
-        type3 = (RadioButton)findViewById(R.id.type3);
-        type4 = (RadioButton)findViewById(R.id.type4);
-        if (type1.isChecked()){
-            String insert = "insert into 'table_activity' (id_plant, type, date_type, actual) values ("+
-                    select_id_for_add_type+", 1, '"+currentDate+"', 0);";
-            mSqLiteDatabase.execSQL(insert);
-            System.out.println(insert);
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    "Событие добавлено",
-                    Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
-        }else if (type2.isChecked()){
-            String insert = "insert into 'table_activity' (id_plant, type, date_type) values ("+
-                    select_id_for_add_type+", 2, '"+currentDate+"');";
-            mSqLiteDatabase.execSQL(insert);
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    "Событие добавлено",
-                    Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
-        }else if (type3.isChecked()){
-            String insert = "insert into 'table_activity' (id_plant, type, date_type) values ("+
-                    select_id_for_add_type+", 3, '"+currentDate+"');";
-            mSqLiteDatabase.execSQL(insert);
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    "Событие добавлено",
-                    Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
-        }else if (type4.isChecked()){
-            String insert = "insert into 'table_activity' (id_plant, type, date_type) values ("+
-                    select_id_for_add_type+", 4, '"+currentDate+"');";
-            System.out.print("add type: "+insert);
-            mSqLiteDatabase.execSQL(insert);
-            System.out.print("add type: "+insert);
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    "Событие добавлено",
-                    Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
-        }
-
+        //
+        System.out.println("ID: " + typeId);
+        String insertIntoActivity = "insert into table_activity (id_plant, type, date_type, actual) values ("+
+                select_id_for_add_type+", "+typeId+", '"+currentDate+"', 0);";
+        mSqLiteDatabase.execSQL(insertIntoActivity);
+        System.out.println(insertIntoActivity);
+        Toast toastAdd = Toast.makeText(getApplicationContext(),
+                "Событие добавлено",
+                Toast.LENGTH_SHORT);
+        toastAdd.setGravity(Gravity.CENTER, 0, 0);
+        toastAdd.show();
     }
 
 }

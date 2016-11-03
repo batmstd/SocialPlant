@@ -71,7 +71,7 @@ public class allEvents extends AppCompatActivity {
                 "INNER JOIN table_plant " +
                 "ON table_plant._ID=table_activity.id_plant " +
                 "INNER JOIN table_type " +
-                "ON table_activity.type=table_type.prop_name " +
+                "ON table_activity.type=table_type._ID " +
                 "where actual is not 1 order by date_type;", null);
         System.out.println("Найдено элементов: " + String.valueOf(userCursor.getCount()));
         String[] headers = new String[] {DBHelper.DATE_TYPE, DBHelper.NAME, DBHelper.PROP_VALUE};
