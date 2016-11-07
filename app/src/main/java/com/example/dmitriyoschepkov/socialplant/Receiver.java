@@ -35,7 +35,7 @@ public class Receiver extends BroadcastReceiver {
                 "INNER JOIN table_plant " +
                 "ON table_plant._ID=table_activity.id_plant " +
                 "INNER JOIN table_type " +
-                "ON table_activity.type=table_type.prop_name " +
+                "ON table_activity.type=table_type._ID " +
                 "where date_type ='"+currentDate+"';";
         mDatabaseHelper = new DBHelper(context, "plant.db", null, DBHelper.DATABASE_VERSION);
         mSqLiteDatabase = mDatabaseHelper.getWritableDatabase();

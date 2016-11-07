@@ -58,7 +58,8 @@ public class DBHelper extends SQLiteOpenHelper implements BaseColumns {
             + ACTUAL + " int, "
             + DATE_TYPE + " CHAR);";
     private static final String DATABASE_CREATE_SCRIPT_TYPE = "create table "
-            + TABLE_TYPE+ " (" +BaseColumns._ID + " integer primary key autoincrement, "
+            + TABLE_TYPE+ " ("
+            + BaseColumns._ID + " integer primary key autoincrement, "
             + PROP_VALUE + " CHAR);";
     private static final  String INSERT_TABLE_TYPE = "insert INTO "
             + TABLE_TYPE+ " ("

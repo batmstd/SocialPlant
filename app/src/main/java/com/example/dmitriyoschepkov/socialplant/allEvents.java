@@ -43,7 +43,7 @@ public class allEvents extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        //FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         mDatabaseHelper = new DBHelper(this, "plant.db", null, DBHelper.DATABASE_VERSION);
         mListAll = (ListView)findViewById(R.id.mListAll);
         /*mListAll.setOnItemClickListener(new AdapterView.OnItemClickListener() {

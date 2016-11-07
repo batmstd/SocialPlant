@@ -6,6 +6,10 @@
         android:id="@+id/allEvents"
         android:title="Все ближайшие события.."
         android:icon="@drawable/ic_view_list_black_24dp"/>
+    <item
+        android:id="@+id/settings"
+        android:title="Настройки"
+        android:icon="@drawable/ic_settings_black_24dp"/>
     <!--item
 
         android:id="@+id/allEvents1"

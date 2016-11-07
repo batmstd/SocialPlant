@@ -164,6 +164,9 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.allEvents){
             Intent intentAll = new Intent(MainActivity.this, allEvents.class);
             startActivity(intentAll);
+        }else if (id == R.id.settings){
+            Intent intentAll = new Intent(MainActivity.this, settings.class);
+            startActivity(intentAll);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

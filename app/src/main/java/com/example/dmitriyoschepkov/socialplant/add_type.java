@@ -65,7 +65,6 @@ public class add_type extends AppCompatActivity {
         setInitialDateTime();
         setTitle("Добавление события");
         listType = (ListView)findViewById(R.id.listType);
-        //
         userCursor =  mSqLiteDatabase.rawQuery("Select * FROM table_type;", null);
         System.out.println("Найдено элементов: " + String.valueOf(userCursor.getCount()));
         listType.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
